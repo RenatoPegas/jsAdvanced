@@ -7,20 +7,22 @@ class NegociationController{
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');    
         this._negociationList = new NegociationList();
+
+        this._negociationsView = new NegociationsView($('#negociationsView'));
+        this._negociationsView.update(this._negociationList);
     }
 
     add(event){
         event.preventDefault();
            
         this._negociationList.add(this._createNegociation());
-        this._clearForm();
-        
-        console.log(this._negociationList.negociations);
+        this._negociationsView.update(this._negociationList);
+        this._clearForm(); 
     }
 
     _createNegociation(){
 
-        return new Negociation(                           //invoke a new instance of class 'Negociation'
+        return new Negociation(                                     //invoke a new instance of class 'Negociation'
             DateHelper.textByDate(this._inputData.value),
             this._inputQuantidade.value,
             this._inputValor.value
