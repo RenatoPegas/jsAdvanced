@@ -1,10 +1,10 @@
-class NegociationsView{
+class NegociationsView extends View{
 
     constructor(element){
-        this._element = element;
+        super(element);
     }
 
-    _template(model){
+    template(model){
 
         return `
                 <table class="table table-hover table-bordered">
@@ -32,7 +32,7 @@ class NegociationsView{
 
                     <tfoot>
                         <td colspan="3"></td>
-                        // <td>${
+                        <td>${
                             //(function(){                                                  
                         //         let total = 0;
                         //         model.negociations.forEach(n => total += n.volume);         //This is a IIFE (Imediatly Invoked Function Expression)
@@ -45,8 +45,6 @@ class NegociationsView{
                 `;
     }
 
-    update(model){
-        this._element.innerHTML = this._template(model);
-    }
+    
 }
 
