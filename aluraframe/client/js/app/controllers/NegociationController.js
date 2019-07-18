@@ -7,7 +7,9 @@ class NegociationController{
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');    
         
-        this._negociationList = new NegociationList();
+        this._negociationList = new NegociationList( model =>
+            this._negociationsView.update(model)                                        //works only with arrow function because lexical context
+        );
 
         this._negociationsView = new NegociationsView($('#negociationsView'));
         this._negociationsView.update(this._negociationList);
@@ -21,12 +23,19 @@ class NegociationController{
         event.preventDefault();
            
         this._negociationList.add(this._createNegociation());
-        this._negociationsView.update(this._negociationList);
+        // this._negociationsView.update(this._negociationList);
         
         this._message.text = 'Negociation with success';
         this._messageView.update(this._message);
         
         this._clearForm(); 
+    }
+
+    delete(){
+        this._negociationList.clear();
+        // this._negociationsView.update(this._negociationList);
+        this._message._text = 'Negociation Deleted';
+        this._messageView.update(this._message);
     }
 
     _createNegociation(){
