@@ -1,14 +1,14 @@
 class NegociationList{
 
-    constructor(trap){
+    constructor(){
         this._negociations = [];
-        this._trap = trap;
+
 
     }
 
     add(negociation){
         this._negociations.push(negociation);
-        this._trap(this);
+  
         // Reflect.apply(this._trap, this._context, [this]);            //class in javascript that reflect parameters    
     }
 
@@ -18,7 +18,7 @@ class NegociationList{
 
     clear(){
         this._negociations = [];
-        this._trap(this);
+
         // Reflect.apply(this._trap, this._context, [this]);             //class in javascript that reflect parameters    
     }
 

@@ -54,11 +54,27 @@
         <script type="text/javascript" src="js/app/views/NegociationsView.js"></script>
         <script type="text/javascript" src="js/app/views/MessageView.js"></script>
         
+        <script>
+            let negociationController = new NegociationController();
+        </script>
 
         <script>
-            
-            let negociationController = new NegociationController();
+            let list = new Proxy(new NegociationList(), {
+                
+                get: (target, prop, receiver) => {
+                    if(['add', 'clear'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
 
+                        return function(){
+                            console.log(`Intercept ${prop}`);
+                            Reflect.apply(target[prop], target, arguments);
+                        }
+
+                    }
+                    return Reflect.get(target, prop, receiver);
+                }
+
+            });
+            list.add(new Negociation(new Date(), 1, 100));
         </script>
     </body>
 </html>

@@ -7,9 +7,26 @@ class NegociationController{
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');    
         
-        this._negociationList = new NegociationList( model =>
-            this._negociationsView.update(model)                                        //works only with arrow function because lexical context
-        );
+        let self = this;
+        this._negociationList = new Proxy(new NegociationList(), {
+                
+            get: (target, prop, receiver) => {
+                if(['add', 'clear'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
+                    
+                    return function(){
+                        console.log(`Intercept ${prop}`);
+                        
+                        Reflect.apply(target[prop], target, arguments);
+
+                        self._negociationsView.update(target);
+                    }
+
+                }
+                return Reflect.get(target, prop, receiver);
+            }
+
+        });
+        
 
         this._negociationsView = new NegociationsView($('#negociationsView'));
         this._negociationsView.update(this._negociationList);
