@@ -58,23 +58,6 @@
             let negociationController = new NegociationController();
         </script>
 
-        <script>
-            let list = new Proxy(new NegociationList(), {
-                
-                get: (target, prop, receiver) => {
-                    if(['add', 'clear'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
-
-                        return function(){
-                            console.log(`Intercept ${prop}`);
-                            Reflect.apply(target[prop], target, arguments);
-                        }
-
-                    }
-                    return Reflect.get(target, prop, receiver);
-                }
-
-            });
-            list.add(new Negociation(new Date(), 1, 100));
-        </script>
+       
     </body>
 </html>
